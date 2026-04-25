@@ -1,9 +1,8 @@
 ---
 deployment:
   tasks:
-    - export APPPATH=/home/ogtgzxxk/meseriasi/src
-    - /bin/mkdir -p $APPPATH/storage/logs
-    - /bin/mkdir -p $APPPATH/storage/framework/cache
-    - /bin/mkdir -p $APPPATH/storage/framework/sessions
-    - /bin/mkdir -p $APPPATH/storage/framework/views
-    - /bin/mkdir -p $APPPATH/bootstrap/cache
+    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/logs
+    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/cache
+    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/sessions
+    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/views
+    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/bootstrap/cache
