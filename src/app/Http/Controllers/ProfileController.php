@@ -41,9 +41,9 @@ class ProfileController extends Controller
         $profileData = $request->only('public_name', 'company_name', 'bio', 'county_id', 'city_id', 'website', 'is_business');
 
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $path = $request->file('avatar')->store('avatars', 'uploads');
             if ($user->profile?->avatar_path) {
-                Storage::disk('public')->delete($user->profile->avatar_path);
+                Storage::disk('uploads')->delete($user->profile->avatar_path);
             }
             $profileData['avatar_path'] = $path;
         }
