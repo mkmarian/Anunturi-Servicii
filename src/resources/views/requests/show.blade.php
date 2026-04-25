@@ -61,7 +61,7 @@
                     @php $profile = $serviceRequest->user->profile; @endphp
 
                     @if($profile?->avatar_path)
-                        <img src="{{ asset('uploads/' . $profile->avatar_path) }}" class="w-14 h-14 rounded-full object-cover mb-3">
+                        <img src="{{ Storage::url($profile->avatar_path) }}" class="w-14 h-14 rounded-full object-cover mb-3">
                     @else
                         <div class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center text-2xl mb-3">👤</div>
                     @endif

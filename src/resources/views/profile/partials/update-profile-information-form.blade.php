@@ -16,7 +16,7 @@
         {{-- Avatar --}}
         <div class="flex items-center gap-5">
             @if($user->profile?->avatar_path)
-                <img src="{{ asset('uploads/' . $user->profile->avatar_path) }}"
+                <img src="{{ Storage::url($user->profile->avatar_path) }}"
                      class="w-16 h-16 rounded-full object-cover flex-shrink-0">
             @else
                 <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-600 flex-shrink-0">
