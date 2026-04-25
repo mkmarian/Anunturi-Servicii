@@ -26,7 +26,8 @@
             <div>
                 <x-input-label for="avatar" :value="__('Fotografie profil')" />
                 <input id="avatar" name="avatar" type="file" accept="image/*"
-                       class="mt-1 block text-sm text-gray-600">
+                       class="mt-1 block text-sm text-gray-600"
+                       onchange="this.closest('form').submit()">
                 <x-input-error :messages="$errors->get('avatar')" class="mt-1" />
             </div>
         </div>
