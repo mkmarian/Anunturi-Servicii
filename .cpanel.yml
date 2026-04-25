@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export APPPATH=/home/ogtgzxxk/meseriasi/
+    - /bin/mkdir -p $APPPATH
+    - /bin/cp -R src/. $APPPATH
+    - /bin/cp -Rf src/public/. /home/ogtgzxxk/public_html/

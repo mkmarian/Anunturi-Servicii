@@ -1,0 +1,15 @@
+# Laravel
+src/vendor/
+src/.env
+src/storage/logs/*.log
+src/storage/framework/cache/
+src/storage/framework/sessions/
+src/storage/framework/views/
+src/bootstrap/cache/*.php
+src/node_modules/
+src/public/build/
+src/public/hot
+
+# Local config
+*.DS_Store
+Thumbs.db
