@@ -1,8 +1,4 @@
 ---
 deployment:
   tasks:
-    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/logs
-    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/cache
-    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/sessions
-    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/storage/framework/views
-    - /bin/mkdir -p /home/ogtgzxxk/meseriasi/src/bootstrap/cache
+    - echo "Deploy OK"
