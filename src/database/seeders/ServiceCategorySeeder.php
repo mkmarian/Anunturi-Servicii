@@ -44,13 +44,6 @@ class ServiceCategorySeeder extends Seeder
                 'Usi si ferestre',
                 'Parchet si dusumele',
             ]],
-            ['name' => 'Acoperisuri', 'icon' => '🏠', 'children' => [
-                'Montaj invelitori',
-                'Mansardare',
-                'Hidroizolatii terase',
-                'Reparatii acoperis',
-                'Jgheaburi si burlane',
-            ]],
             ['name' => 'Zugraveli & Vopsitorii', 'icon' => '🎨', 'children' => [
                 'Zugraveli interioare',
                 'Vopsitorii exterioare',
@@ -58,46 +51,12 @@ class ServiceCategorySeeder extends Seeder
                 'Tapet',
                 'Gresie si faianta',
             ]],
-            ['name' => 'Curatenie & Menaj', 'icon' => '🧹', 'children' => [
-                'Curatenie rezidentiala',
-                'Curatenie birouri',
-                'Curatenie dupa constructii',
-                'Spalat geamuri',
-                'Dezinsectie si deratizare',
-            ]],
-            ['name' => 'Gradinarit & Peisagistica', 'icon' => '🌿', 'children' => [
+            ['name' => 'Gradinarit', 'icon' => '🌿', 'children' => [
                 'Tuns gard viu si copaci',
                 'Sisteme irigatii',
                 'Amenajare gradina',
                 'Gazon',
                 'Plantat si intretinut verde',
-            ]],
-            ['name' => 'Servicii IT & Tehnice', 'icon' => '💻', 'children' => [
-                'Reparatii calculatoare si laptopuri',
-                'Retele IT',
-                'Supraveghere video (CCTV)',
-                'Recuperare date',
-                'Configurare sisteme smart home',
-            ]],
-            ['name' => 'Transport & Mutari', 'icon' => '🚚', 'children' => [
-                'Mutari mobila si bunuri',
-                'Transport marfa',
-                'Montaj mobila',
-                'Servicii curier local',
-            ]],
-            ['name' => 'Auto & Mecanica', 'icon' => '🚗', 'children' => [
-                'Reparatii auto',
-                'Tinichigerie si vopsitorie',
-                'Vulcanizare',
-                'Climatizare auto',
-                'Revizie si schimb ulei',
-            ]],
-            ['name' => 'Evenimente & Foto', 'icon' => '📸', 'children' => [
-                'Fotografie si videografie',
-                'DJ si muzica live',
-                'Decoratiuni evenimente',
-                'Catering',
-                'Organizare evenimente',
             ]],
             ['name' => 'Alte servicii', 'icon' => '🔨', 'children' => [
                 'Confectii metalice',
