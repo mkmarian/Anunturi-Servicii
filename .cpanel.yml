@@ -1,7 +1,9 @@
 ---
 deployment:
   tasks:
-    - export APPPATH=/home/ogtgzxxk/meseriasi/
-    - /bin/mkdir -p $APPPATH
-    - /bin/cp -R src/. $APPPATH
-    - /bin/cp -Rf src/public/. /home/ogtgzxxk/public_html/
+    - export APPPATH=/home/ogtgzxxk/meseriasi/src
+    - /bin/mkdir -p $APPPATH/storage/logs
+    - /bin/mkdir -p $APPPATH/storage/framework/cache
+    - /bin/mkdir -p $APPPATH/storage/framework/sessions
+    - /bin/mkdir -p $APPPATH/storage/framework/views
+    - /bin/mkdir -p $APPPATH/bootstrap/cache
