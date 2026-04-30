@@ -1,34 +1,33 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">Crează un cont gratuit</h1>
+    <p class="text-sm text-gray-500 mb-6">Alătură-te comunității MeseriiRo</p>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
         <input type="hidden" name="role" value="customer">
 
-        <!-- Nume -->
-        <div class="mt-4">
+        <div>
             <x-input-label for="name" :value="__('Nume')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email -->
-        <div class="mt-4">
+        <div>
             <x-input-label for="email" :value="__('Adresa email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" oninput="checkEmail()" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
             <p id="email-msg" class="mt-1 text-sm hidden"></p>
         </div>
 
-        <!-- Telefon -->
-        <div class="mt-4">
+        <div>
             <x-input-label for="phone" :value="__('Telefon')" />
             <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" autocomplete="tel" oninput="checkPhone()" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             <p id="phone-msg" class="mt-1 text-sm hidden"></p>
         </div>
 
-        <!-- Parola -->
-        <div class="mt-4">
+        <div>
             <x-input-label for="password" :value="__('Parola')" />
             <div class="relative mt-1">
                 <input id="password" type="password" name="password" required autocomplete="new-password"
@@ -46,9 +45,8 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirmare parola -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirmare parola')" />
+        <div>
+            <x-input-label for="password_confirmation" :value="__('Confirmare parolă')" />
             <div class="relative mt-1">
                 <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" oninput="checkMatch()"
                        class="block w-full pr-10 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
@@ -64,14 +62,14 @@
             <p id="match-msg" class="mt-1 text-sm hidden"></p>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Ai deja cont?') }}
-            </a>
-            <x-primary-button class="ms-4">
-                {{ __('Creeaza cont') }}
-            </x-primary-button>
-        </div>
+        <x-primary-button class="w-full justify-center py-3 text-base mt-2">
+            Creează cont
+        </x-primary-button>
+
+        <p class="text-center text-sm text-gray-500">
+            Ai deja cont?
+            <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold transition">Autentifică-te</a>
+        </p>
     </form>
 
     <script>

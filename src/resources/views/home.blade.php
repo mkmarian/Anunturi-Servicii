@@ -110,42 +110,52 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             @foreach($recentListings as $listing)
-                <a href="{{ route('listings.show', $listing->slug) }}"
-                   class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group border border-gray-100 hover:border-indigo-200">
-                    @if($listing->images->isNotEmpty())
-                        <div class="h-44 overflow-hidden">
-                            <img src="{{ Storage::url($listing->images->first()->path) }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                 alt="{{ $listing->title }}">
-                        </div>
-                    @else
-                        <div class="h-44 bg-gradient-to-br from-indigo-50 to-violet-50 flex items-center justify-center text-5xl">
-                            {{ $listing->category->icon ?? '🔧' }}
-                        </div>
-                    @endif
+                <div class="relative bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group border border-gray-100 hover:border-indigo-200">
+                    <a href="{{ route('listings.show', $listing->slug) }}" class="block">
+                        @if($listing->images->isNotEmpty())
+                            <div class="h-44 overflow-hidden">
+                                <img src="{{ Storage::url($listing->images->first()->path) }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                     alt="{{ $listing->title }}">
+                            </div>
+                        @else
+                            <div class="h-44 bg-gradient-to-br from-indigo-50 to-violet-50 flex items-center justify-center text-5xl">
+                                {{ $listing->category->icon ?? '🔧' }}
+                            </div>
+                        @endif
 
-                    <div class="p-4">
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="text-xs text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-full">{{ $listing->category->name }}</span>
-                            @if($listing->featured_until && $listing->featured_until->isFuture())
-                                <span class="text-xs bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full font-semibold">⭐ Top</span>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-xs text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-full">{{ $listing->category->name }}</span>
+                                @if($listing->featured_until && $listing->featured_until->isFuture())
+                                    <span class="text-xs bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full font-semibold">⭐ Top</span>
+                                @endif
+                            </div>
+                            <h3 class="font-semibold text-gray-900 leading-snug line-clamp-2 text-sm">{{ $listing->title }}</h3>
+                            <p class="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                {{ $listing->city->name ?? '' }}, {{ $listing->county->name ?? '' }}
+                            </p>
+                            @if($listing->price)
+                                <p class="mt-2.5 font-bold text-indigo-700 text-sm">
+                                    {{ number_format($listing->price, 0, ',', '.') }} RON
+                                    @if($listing->price_type !== 'fix')
+                                        <span class="text-xs font-normal text-gray-400">/ {{ $listing->price_type }}</span>
+                                    @endif
+                                </p>
                             @endif
                         </div>
-                        <h3 class="font-semibold text-gray-900 leading-snug line-clamp-2 text-sm">{{ $listing->title }}</h3>
-                        <p class="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-                            {{ $listing->city->name ?? '' }}, {{ $listing->county->name ?? '' }}
-                        </p>
-                        @if($listing->price)
-                            <p class="mt-2.5 font-bold text-indigo-700 text-sm">
-                                {{ number_format($listing->price, 0, ',', '.') }} RON
-                                @if($listing->price_type !== 'fix')
-                                    <span class="text-xs font-normal text-gray-400">/ {{ $listing->price_type }}</span>
-                                @endif
-                            </p>
-                        @endif
-                    </div>
-                </a>
+                    </a>
+                    @auth
+                    <button onclick="toggleFav(event, this, {{ $listing->id }})"
+                            class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow transition"
+                            title="{{ in_array($listing->id, $favoriteIds) ? 'Elimină din favorite' : 'Salvează la favorite' }}">
+                        <svg class="w-4 h-4 {{ in_array($listing->id, $favoriteIds) ? 'text-red-500' : 'text-gray-300' }}" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </button>
+                    @endauth
+                </div>
             @endforeach
         </div>
     </div>
