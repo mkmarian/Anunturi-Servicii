@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Public;
 
+use App\Domain\Listings\Models\Favorite;
 use App\Domain\Listings\Models\Listing;
 use App\Domain\Reviews\Models\Review;
 use App\Domain\Shared\Models\County;
@@ -47,7 +48,11 @@ class ListingController extends Controller
         $categories = ServiceCategory::active()->roots()->ordered()->get();
         $counties   = County::orderBy('name')->get();
 
-        return view('listings.index', compact('listings', 'categories', 'counties'));
+        $favoriteIds = Auth::check()
+            ? Favorite::where('user_id', Auth::id())->pluck('listing_id')->toArray()
+            : [];
+
+        return view('listings.index', compact('listings', 'categories', 'counties', 'favoriteIds'));
     }
 
     public function show(string $slug): View
