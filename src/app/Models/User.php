@@ -97,6 +97,16 @@ class User extends Authenticatable
         return $this->hasMany(\App\Domain\Accounts\Models\LoginHistory::class);
     }
 
+    public function craftsmanApplications()
+    {
+        return $this->hasMany(\App\Domain\Accounts\Models\CraftsmanApplication::class);
+    }
+
+    public function latestCraftsmanApplication()
+    {
+        return $this->hasOne(\App\Domain\Accounts\Models\CraftsmanApplication::class)->latestOfMany();
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(\App\Domain\Monetization\Models\Subscription::class);

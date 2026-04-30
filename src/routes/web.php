@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ListingController as AdminListingController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\CraftsmanApplicationController as AdminCraftsmanApplicationController;
+use App\Http\Controllers\CraftsmanApplicationController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\Account\StatisticsController;
@@ -50,10 +52,19 @@ Route::get('/api/check-phone', function (\Illuminate\Http\Request $request) {
 Route::get('/dashboard', function () {
     $user = auth()->user();
     if ($user->isCraftsman())  return redirect()->route('craftsman.listings.index');
-    if ($user->isCustomer())   return redirect()->route('customer.requests.index');
     if ($user->isAdmin() || $user->isModerator()) return redirect()->route('admin.dashboard');
+    if ($user->isCustomer()) {
+        $latestApplication = $user->latestCraftsmanApplication;
+        $categories = \App\Domain\Shared\Models\ServiceCategory::active()->ordered()->get();
+        return view('dashboard', compact('latestApplication', 'categories'));
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// ── Cerere meserias (client autentificat) ────────────────────
+Route::post('/cerere-meserias', [CraftsmanApplicationController::class, 'store'])
+    ->middleware(['auth', 'role:customer'])
+    ->name('craftsman-application.store');
 
 // ── Profil (orice utilizator autentificat) ────────────────────
 Route::middleware('auth')->group(function () {
@@ -139,7 +150,15 @@ Route::middleware(['auth', 'role:admin,moderator'])->prefix('admin')->name('admi
     Route::patch('utilizatori/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
 
     // Categorii
-    Route::resource('categorii', AdminCategoryController::class)->names('categories');
+    Route::resource('categorii', AdminCategoryController::class)
+        ->parameters(['categorii' => 'category'])
+        ->names('categories');
+
+    // Cereri meserias
+    Route::get('cereri-meserias', [AdminCraftsmanApplicationController::class, 'index'])->name('craftsman-applications.index');
+    Route::get('cereri-meserias/{craftsmanApplication}', [AdminCraftsmanApplicationController::class, 'show'])->name('craftsman-applications.show');
+    Route::patch('cereri-meserias/{craftsmanApplication}/approve', [AdminCraftsmanApplicationController::class, 'approve'])->name('craftsman-applications.approve');
+    Route::patch('cereri-meserias/{craftsmanApplication}/reject', [AdminCraftsmanApplicationController::class, 'reject'])->name('craftsman-applications.reject');
 });
 
 require __DIR__.'/auth.php';
