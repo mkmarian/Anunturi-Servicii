@@ -9,7 +9,7 @@ class UpdateServiceRequestRequest extends FormRequest
     public function authorize(): bool
     {
         $sr = $this->route('cerere');
-        return $this->user()?->id === $sr?->user_id;
+        return $this->user()?->id == $sr?->user_id;
     }
 
     public function rules(): array
