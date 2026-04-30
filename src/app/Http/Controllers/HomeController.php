@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Listings\Models\Favorite;
 use App\Domain\Listings\Models\Listing;
 use App\Domain\Requests\Models\ServiceRequest;
 use App\Domain\Shared\Models\County;
@@ -42,6 +43,10 @@ class HomeController extends Controller
             'counties' => $counties->count(),
         ];
 
-        return view('home', compact('recentListings', 'recentRequests', 'categories', 'counties', 'stats'));
+        $favoriteIds = auth()->check()
+            ? Favorite::where('user_id', auth()->id())->pluck('listing_id')->toArray()
+            : [];
+
+        return view('home', compact('recentListings', 'recentRequests', 'categories', 'counties', 'stats', 'favoriteIds'));
     }
 }
