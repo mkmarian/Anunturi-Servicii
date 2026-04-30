@@ -66,36 +66,45 @@
                 <p class="text-sm text-gray-500 mb-4">{{ $listings->total() }} anunțuri găsite</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     @foreach($listings as $listing)
-                        <a href="{{ route('listings.show', $listing->slug) }}"
-                           class="bg-white shadow-sm rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group border border-gray-100 hover:border-indigo-200">
-
-                            <div class="h-44 overflow-hidden bg-gray-50">
-                                @if($listing->primaryImage)
-                                    <img src="{{ Storage::url($listing->primaryImage->path) }}"
-                                         alt="{{ $listing->primaryImage->alt_text }}"
-                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-indigo-50 to-violet-50">
-                                        {{ $listing->category->icon ?? '🔧' }}
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="p-4">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">{{ $listing->category->name }}</span>
-                                    @if($listing->featured_until && $listing->featured_until->isFuture())
-                                        <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">⭐ Top</span>
+                        <div class="relative bg-white shadow-sm rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group border border-gray-100 hover:border-indigo-200">
+                            <a href="{{ route('listings.show', $listing->slug) }}" class="block">
+                                <div class="h-44 overflow-hidden bg-gray-50">
+                                    @if($listing->primaryImage)
+                                        <img src="{{ Storage::url($listing->primaryImage->path) }}"
+                                             alt="{{ $listing->primaryImage->alt_text }}"
+                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-indigo-50 to-violet-50">
+                                            {{ $listing->category->icon ?? '🔧' }}
+                                        </div>
                                     @endif
                                 </div>
-                                <h3 class="font-semibold text-gray-900 line-clamp-2 text-sm leading-snug">{{ $listing->title }}</h3>
-                                <p class="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
-                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-                                    {{ $listing->city->name }}, {{ $listing->county->name }}
-                                </p>
-                                <p class="mt-2.5 font-bold text-indigo-700 text-sm">{{ $listing->price_display }}</p>
-                            </div>
-                        </a>
+
+                                <div class="p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">{{ $listing->category->name }}</span>
+                                        @if($listing->featured_until && $listing->featured_until->isFuture())
+                                            <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">⭐ Top</span>
+                                        @endif
+                                    </div>
+                                    <h3 class="font-semibold text-gray-900 line-clamp-2 text-sm leading-snug">{{ $listing->title }}</h3>
+                                    <p class="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                        {{ $listing->city->name }}, {{ $listing->county->name }}
+                                    </p>
+                                    <p class="mt-2.5 font-bold text-indigo-700 text-sm">{{ $listing->price_display }}</p>
+                                </div>
+                            </a>
+                            @auth
+                            <button onclick="toggleFav(event, this, {{ $listing->id }})"
+                                    class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow transition"
+                                    title="{{ in_array($listing->id, $favoriteIds) ? 'Elimină din favorite' : 'Salvează la favorite' }}">
+                                <svg class="w-4 h-4 {{ in_array($listing->id, $favoriteIds) ? 'text-red-500' : 'text-gray-300' }}" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </button>
+                            @endauth
+                        </div>
                     @endforeach
                 </div>
 
@@ -104,4 +113,32 @@
 
         </div>
     </div>
+
+    @auth
+    <script>
+    function toggleFav(event, btn, listingId) {
+        event.preventDefault();
+        fetch('/favorite/' + listingId, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            }
+        })
+        .then(r => r.json())
+        .then(data => {
+            const svg = btn.querySelector('svg');
+            if (data.favorited) {
+                svg.classList.add('text-red-500');
+                svg.classList.remove('text-gray-300');
+                btn.title = 'Elimină din favorite';
+            } else {
+                svg.classList.remove('text-red-500');
+                svg.classList.add('text-gray-300');
+                btn.title = 'Salvează la favorite';
+            }
+        });
+    }
+    </script>
+    @endauth
 </x-app-layout>
