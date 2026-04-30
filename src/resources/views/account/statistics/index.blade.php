@@ -1,10 +1,11 @@
 <x-app-layout seoTitle="Statisticile mele">
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800">📊 Statisticile mele</h2>
-    </x-slot>
-
     <div class="py-8">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+            <div class="mb-2">
+                <h1 class="text-2xl font-bold text-gray-900">Statisticile mele</h1>
+                <p class="text-sm text-gray-500 mt-1">Performanța anunțurilor tale</p>
+            </div>
 
             {{-- ── Carduri sumar ───────────────────────────── --}}
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
