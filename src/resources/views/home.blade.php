@@ -15,44 +15,43 @@
 @include('layouts.navigation')
 
 {{-- ── HERO ─────────────────────────────────────────────────────────── --}}
-<section class="relative bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-600 text-white overflow-hidden">
-    {{-- Decorative blobs --}}
-    <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none"></div>
+<section class="relative bg-white overflow-hidden border-b border-gray-100">
+    {{-- Dot pattern background --}}
+    <div class="absolute inset-0 opacity-50 pointer-events-none"
+         style="background-image: radial-gradient(#c7d2fe 1px, transparent 1px); background-size: 28px 28px;"></div>
+    {{-- Soft gradient fade at bottom --}}
+    <div class="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-gray-50 to-transparent pointer-events-none"></div>
 
-    <div class="relative max-w-4xl mx-auto px-4 py-20 sm:py-28 text-center">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-            Găsești meșteșugarul<br class="hidden sm:block"> potrivit, oriunde
+    <div class="relative max-w-4xl mx-auto px-4 pt-20 pb-24 sm:pt-28 sm:pb-32 text-center">
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
+            Găsești meșteșugarul<br class="hidden sm:block">
+            <span class="text-indigo-600">potrivit</span>, oriunde
         </h1>
 
-        {{-- Stats badges --}}
-        <div class="flex flex-wrap justify-center gap-4 mt-6 mb-8 text-sm">
-            <span class="flex items-center gap-1.5 bg-white/15 px-3 py-1.5 rounded-full">
-                📋 <strong>{{ number_format($stats['listings']) }}</strong> anunțuri active
-            </span>
-            <span class="flex items-center gap-1.5 bg-white/15 px-3 py-1.5 rounded-full">
-                📍 <strong>{{ $stats['counties'] }}</strong> județe
-            </span>
-            <span class="flex items-center gap-1.5 bg-white/15 px-3 py-1.5 rounded-full">
-                ⭐ Servicii verificate
-            </span>
+        {{-- Stats --}}
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 mt-6 mb-10 text-sm text-gray-500">
+            <span>📋 <strong class="text-gray-800">{{ number_format($stats['listings']) }}</strong> anunțuri active</span>
+            <span>📍 <strong class="text-gray-800">{{ $stats['counties'] }}</strong> județe</span>
+            <span>⭐ Servicii verificate</span>
         </div>
 
-        {{-- Search hero --}}
+        {{-- Search hero — card cu shadow --}}
         <form action="{{ route('listings.index') }}" method="GET"
-              class="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
+              class="flex flex-col sm:flex-row items-stretch gap-0 max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
             <input type="text" name="q" placeholder="Ce serviciu cauți? (ex: electrician...)"
                    value="{{ request('q') }}"
-                   class="flex-1 rounded-xl px-5 py-3.5 text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-white/60 shadow-xl" />
+                   class="flex-1 px-5 py-4 text-gray-900 text-base focus:outline-none placeholder-gray-400 min-w-0" />
+            <div class="hidden sm:block w-px bg-gray-200 self-stretch"></div>
             <select name="county"
-                    class="sm:w-44 rounded-xl px-4 py-3.5 text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white/60 shadow-xl">
+                    class="sm:w-44 px-4 py-4 text-gray-600 text-sm focus:outline-none bg-white border-t sm:border-t-0 border-gray-200 cursor-pointer">
                 <option value="">Toate județele</option>
                 @foreach($counties as $county)
                     <option value="{{ $county->id }}">{{ $county->name }}</option>
                 @endforeach
             </select>
             <button type="submit"
-                    class="px-7 py-3.5 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 shadow-xl transition whitespace-nowrap">
+                    class="px-8 py-4 bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition whitespace-nowrap text-base border-t sm:border-t-0 border-gray-200">
                 Caută
             </button>
         </form>
