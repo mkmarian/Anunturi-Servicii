@@ -36,6 +36,7 @@ class ServiceRequest extends Model
     protected function casts(): array
     {
         return [
+            'user_id'      => 'integer',
             'budget_from'  => 'decimal:2',
             'budget_to'    => 'decimal:2',
             'published_at' => 'datetime',
