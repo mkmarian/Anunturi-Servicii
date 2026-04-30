@@ -22,7 +22,7 @@
     {{-- Soft gradient fade at bottom --}}
     <div class="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-gray-50 to-transparent pointer-events-none"></div>
 
-    <div class="relative max-w-4xl mx-auto px-4 pt-20 pb-24 sm:pt-28 sm:pb-32 text-center">
+    <div class="relative max-w-4xl mx-auto px-4 pt-28 pb-32 sm:pt-40 sm:pb-44 text-center">
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
             Găsești meșteșugarul<br class="hidden sm:block">
@@ -100,8 +100,8 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             @foreach($recentListings as $listing)
-                <div class="relative bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group border border-gray-100 hover:border-indigo-200">
-                    <a href="{{ route('listings.show', $listing->slug) }}" class="block">
+                <div class="relative bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 group border border-gray-100 hover:border-indigo-200">
+                    <a href="{{ route('listings.show', $listing->slug) }}" class="block overflow-hidden rounded-2xl">
                         @if($listing->images->isNotEmpty())
                             <div class="h-44 overflow-hidden">
                                 <img src="{{ Storage::url($listing->images->first()->path) }}"
