@@ -21,15 +21,9 @@
     <div class="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none"></div>
 
     <div class="relative max-w-4xl mx-auto px-4 py-20 sm:py-28 text-center">
-        <span class="inline-block mb-4 px-3 py-1 bg-white/15 rounded-full text-sm font-medium tracking-wide">
-            🇷🇴 Platforma #1 de servicii din România
-        </span>
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
             Găsești meșteșugarul<br class="hidden sm:block"> potrivit, oriunde
         </h1>
-        <p class="mt-5 text-indigo-100 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Electricieni, constructori, instalatori, zugravi și zeci de alți specialiști.
-        </p>
 
         {{-- Stats badges --}}
         <div class="flex flex-wrap justify-center gap-4 mt-6 mb-8 text-sm">
@@ -70,24 +64,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-8">Categorii</h2>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2">
             <a href="{{ route('listings.index') }}"
-               class="group flex flex-col items-center p-5 bg-gray-50 rounded-2xl hover:bg-indigo-600 hover:shadow-lg transition-all duration-200 text-center border border-gray-100 hover:border-indigo-600">
-                <span class="text-3xl mb-2.5">🗂️</span>
-                <span class="text-sm font-medium text-gray-700 group-hover:text-white leading-snug">
+               class="group flex flex-col items-center p-3 bg-gray-50 rounded-xl hover:bg-indigo-600 hover:shadow-md transition-all duration-200 text-center border border-gray-100 hover:border-indigo-600">
+                <span class="text-2xl mb-1.5">🗂️</span>
+                <span class="text-xs font-medium text-gray-700 group-hover:text-white leading-snug">
                     Toate categoriile
                 </span>
             </a>
             @foreach($categories as $cat)
                 <a href="{{ route('listings.index', ['category' => $cat->id]) }}"
-                   class="group flex flex-col items-center p-5 bg-gray-50 rounded-2xl hover:bg-indigo-600 hover:shadow-lg transition-all duration-200 text-center border border-gray-100 hover:border-indigo-600">
-                    <span class="text-3xl mb-2.5">{{ $cat->icon }}</span>
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-white leading-snug">
+                   class="group flex flex-col items-center p-3 bg-gray-50 rounded-xl hover:bg-indigo-600 hover:shadow-md transition-all duration-200 text-center border border-gray-100 hover:border-indigo-600">
+                    <span class="text-2xl mb-1.5">{{ $cat->icon }}</span>
+                    <span class="text-xs font-medium text-gray-700 group-hover:text-white leading-snug">
                         {{ $cat->name }}
                     </span>
-                    @if($cat->listings_count > 0)
-                        <span class="mt-1.5 text-xs text-gray-400 group-hover:text-indigo-200">{{ $cat->listings_count }} anunțuri</span>
-                    @endif
                 </a>
             @endforeach
         </div>
@@ -186,7 +177,6 @@
                         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
                         {{ $sr->city->name ?? '' }}, {{ $sr->county->name ?? '' }}
                     </p>
-                    <p class="mt-2 text-xs text-gray-400 group-hover:text-indigo-200 transition-colors">{{ $sr->responses_count }} oferte primite</p>
                 </a>
             @endforeach
         </div>
