@@ -54,10 +54,6 @@
                                 <x-dropdown-link :href="route('craftsman.statistics')">
                                     📊 Statisticile mele
                                 </x-dropdown-link>
-                            @elseif(auth()->user()->isCustomer())
-                                <x-dropdown-link :href="route('customer.requests.index')">
-                                    📋 Cererile mele
-                                </x-dropdown-link>
                             @endif
                             @if(auth()->user()->isAdmin() || auth()->user()->isModerator())
                                 <x-dropdown-link :href="route('admin.listings.index')">
@@ -68,6 +64,12 @@
                             <x-dropdown-link :href="route('favorites.index')">
                                 🤍 Anunțuri salvate
                             </x-dropdown-link>
+
+                            @if(auth()->user()->isCustomer())
+                                <x-dropdown-link :href="route('customer.requests.index')">
+                                    📋 Cererile mele
+                                </x-dropdown-link>
+                            @endif
 
                             <x-dropdown-link :href="route('messages.index')">
                                 <span class="flex items-center justify-between w-full gap-3">
@@ -175,8 +177,6 @@
             @if(auth()->user()->isCraftsman())
                 <a href="{{ route('craftsman.listings.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📋 Anunțurile mele</a>
                 <a href="{{ route('craftsman.statistics') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📊 Statisticile mele</a>
-            @elseif(auth()->user()->isCustomer())
-                <a href="{{ route('customer.requests.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📋 Cererile mele</a>
             @endif
 
             @if(auth()->user()->isAdmin() || auth()->user()->isModerator())
@@ -184,6 +184,10 @@
             @endif
 
             <a href="{{ route('favorites.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">🤍 Anunțuri salvate</a>
+
+            @if(auth()->user()->isCustomer())
+                <a href="{{ route('customer.requests.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📋 Cererile mele</a>
+            @endif
             <a href="{{ route('messages.index') }}" class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">
                 <span class="inline-flex items-center gap-3">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-7 6l-3-3V7a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H9l-3 3z" /></svg>
