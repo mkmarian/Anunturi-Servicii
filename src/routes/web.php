@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ListingController as AdminListingController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\Account\StatisticsController;
@@ -136,6 +137,9 @@ Route::middleware(['auth', 'role:admin,moderator'])->prefix('admin')->name('admi
     Route::get('utilizatori', [AdminUserController::class, 'index'])->name('users.index');
     Route::get('utilizatori/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::patch('utilizatori/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
+
+    // Categorii
+    Route::resource('categorii', AdminCategoryController::class)->names('categories');
 });
 
 require __DIR__.'/auth.php';
