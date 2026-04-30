@@ -248,5 +248,30 @@
     </div>
 </footer>
 
+<script>
+function toggleFav(event, btn, listingId) {
+    event.preventDefault();
+    fetch('/favorite/' + listingId, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+        }
+    })
+    .then(r => r.json())
+    .then(data => {
+        const svg = btn.querySelector('svg');
+        if (data.favorited) {
+            svg.classList.add('text-red-500');
+            svg.classList.remove('text-gray-300');
+            btn.title = 'Elimină din favorite';
+        } else {
+            svg.classList.remove('text-red-500');
+            svg.classList.add('text-gray-300');
+            btn.title = 'Salvează la favorite';
+        }
+    });
+}
+</script>
 </body>
 </html>
