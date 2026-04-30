@@ -59,6 +59,17 @@
                 <span>👥</span> Utilizatori
             </a>
 
+            <a href="{{ route('admin.craftsman-applications.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg {{ adminActive('admin.craftsman-applications') }}">
+                <span>🔨</span> Cereri Meseriaș
+                @php
+                    $pendingCount = \App\Domain\Accounts\Models\CraftsmanApplication::pending()->count();
+                @endphp
+                @if($pendingCount > 0)
+                    <span class="ml-auto bg-amber-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">{{ $pendingCount }}</span>
+                @endif
+            </a>
+
             <div class="pt-3 pb-1 px-3 text-xs text-gray-500 uppercase tracking-wider">Site</div>
 
             <a href="{{ route('home') }}" target="_blank"

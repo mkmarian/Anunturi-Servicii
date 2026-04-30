@@ -47,27 +47,6 @@
                 {{-- Sidebar --}}
                 <div class="space-y-4">
 
-                    {{-- Card client --}}
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                        @php $profile = $serviceRequest->user->profile; @endphp
-
-                        <div class="flex items-center gap-3 mb-3">
-                            @if($profile?->avatar_path)
-                                <img src="{{ asset('uploads/' . $profile->avatar_path) }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0 ring-2 ring-indigo-100">
-                            @else
-                                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-base font-bold text-indigo-600 flex-shrink-0">
-                                    {{ Str::upper(Str::substr($serviceRequest->user->name, 0, 1)) }}
-                                </div>
-                            @endif
-                            <div class="min-w-0">
-                                <h3 class="font-semibold text-gray-900 text-sm truncate">{{ $serviceRequest->user->name }}</h3>
-                                <p class="text-xs text-gray-400 mt-0.5">
-                                    {{ $serviceRequest->responses_count }} răspuns{{ $serviceRequest->responses_count == 1 ? '' : 'uri' }} primite
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                     {{-- Raspunde (meseriasii) --}}
                     @auth
                         @if(auth()->user()->isCraftsman())
