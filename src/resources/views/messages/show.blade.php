@@ -1,35 +1,30 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('messages.index') }}" class="text-indigo-600 hover:text-indigo-800">← Mesaje</a>
-            <span class="text-gray-400">/</span>
-            <h2 class="font-semibold text-xl text-gray-800">{{ $other->name ?? 'Utilizator' }}</h2>
-        </div>
-    </x-slot>
-
     <div class="py-6">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col" style="height: calc(100vh - 180px)">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col" style="height: calc(100vh - 120px)">
 
-            {{-- Context anunt / cerere --}}
-            @if($conversation->listing)
-                <div class="mb-3 p-2 bg-indigo-50 rounded-md text-sm text-indigo-700">
-                    📌 Referitor la anuntul:
-                    <a href="{{ route('listings.show', $conversation->listing->slug) }}" class="underline font-medium">
-                        {{ $conversation->listing->title }}
-                    </a>
+            {{-- Header conversatie --}}
+            <div class="flex items-center gap-3 mb-3">
+                <a href="{{ route('messages.index') }}" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-500 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </a>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-sm font-bold text-indigo-600 flex-shrink-0">
+                        {{ Str::upper(Str::substr($other->name ?? '?', 0, 1)) }}
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 text-sm leading-tight">{{ $other->name ?? 'Utilizator' }}</p>
+                        @if($conversation->listing)
+                            <p class="text-xs text-indigo-500 truncate max-w-xs">📌 {{ Str::limit($conversation->listing->title, 40) }}</p>
+                        @elseif($conversation->serviceRequest)
+                            <p class="text-xs text-green-600 truncate max-w-xs">📋 {{ Str::limit($conversation->serviceRequest->title, 40) }}</p>
+                        @endif
+                    </div>
                 </div>
-            @elseif($conversation->serviceRequest)
-                <div class="mb-3 p-2 bg-green-50 rounded-md text-sm text-green-700">
-                    📋 Referitor la cererea:
-                    <a href="{{ route('service-requests.show', $conversation->serviceRequest->slug) }}" class="underline font-medium">
-                        {{ $conversation->serviceRequest->title }}
-                    </a>
-                </div>
-            @endif
+            </div>
 
             {{-- Zona mesaje --}}
             <div id="messages-container"
-                 class="flex-1 overflow-y-auto bg-white shadow rounded-t-lg p-4 space-y-3"
+                 class="flex-1 overflow-y-auto bg-white shadow-sm rounded-2xl p-4 space-y-3 border border-gray-100"
                  data-conversation="{{ $conversation->id }}"
                  data-last-id="{{ $messages->last()?->id ?? 0 }}"
                  data-my-id="{{ auth()->id() }}">
@@ -43,14 +38,14 @@
             <form id="send-form"
                   action="{{ route('messages.store', $conversation) }}"
                   method="POST"
-                  class="bg-white border-t border-gray-200 shadow rounded-b-lg p-3 flex gap-2">
+                  class="mt-3 bg-white border border-gray-200 shadow-sm rounded-2xl p-3 flex gap-2 items-end">
                 @csrf
                 <textarea id="msg-input" name="body" rows="2" required maxlength="5000"
                           placeholder="Scrie un mesaj..."
-                          class="flex-1 block border-gray-300 rounded-md shadow-sm text-sm focus:ring-indigo-500 focus:border-indigo-500 resize-none"></textarea>
+                          class="flex-1 block border-gray-200 rounded-xl shadow-sm text-sm focus:ring-indigo-500 focus:border-indigo-500 resize-none py-2.5 px-3"></textarea>
                 <button type="submit"
-                        class="self-end px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium">
-                    Trimite
+                        class="flex-shrink-0 w-10 h-10 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition flex items-center justify-center shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                 </button>
             </form>
         </div>
