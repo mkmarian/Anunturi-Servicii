@@ -24,13 +24,11 @@ class UserProfile extends Model
         'cover_path',
         'website',
         'whatsapp_phone',
-        'is_business',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_business' => 'boolean',
             'latitude'    => 'float',
             'longitude'   => 'float',
         ];

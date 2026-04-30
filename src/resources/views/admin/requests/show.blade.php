@@ -12,12 +12,6 @@
                 <div class="mt-5 grid grid-cols-2 gap-4 text-sm text-gray-600 border-t border-gray-100 pt-4">
                     <div><span class="text-gray-400">Județ:</span> {{ $serviceRequest->county->name ?? '—' }}</div>
                     <div><span class="text-gray-400">Oraș:</span> {{ $serviceRequest->city->name ?? '—' }}</div>
-                    @if($serviceRequest->budget_from || $serviceRequest->budget_to)
-                        <div><span class="text-gray-400">Buget:</span>
-                            {{ $serviceRequest->budget_from ? number_format($serviceRequest->budget_from,0,',','.') : '?' }}
-                            — {{ $serviceRequest->budget_to ? number_format($serviceRequest->budget_to,0,',','.') : '?' }} RON
-                        </div>
-                    @endif
                     <div><span class="text-gray-400">Postat:</span> {{ $serviceRequest->created_at->format('d.m.Y H:i') }}</div>
                 </div>
             </div>

@@ -69,25 +69,6 @@
                                     <p class="mt-2 text-gray-700 text-sm line-clamp-2">{{ $sr->description }}</p>
                                 </div>
                                 <div class="flex-shrink-0 text-right">
-                                    @if($sr->budget_from || $sr->budget_to)
-                                        <p class="font-semibold text-indigo-700">
-                                            @if($sr->budget_from && $sr->budget_to)
-                                                {{ number_format($sr->budget_from, 0, ',', '.') }} - {{ number_format($sr->budget_to, 0, ',', '.') }} RON
-                                            @elseif($sr->budget_from)
-                                                De la {{ number_format($sr->budget_from, 0, ',', '.') }} RON
-                                            @else
-                                                Max {{ number_format($sr->budget_to, 0, ',', '.') }} RON
-                                            @endif
-                                        </p>
-                                    @elseif($sr->budget_type)
-                                        <p class="text-sm text-gray-500">{{ ucfirst($sr->budget_type) }}</p>
-                                    @endif
-
-                                    @if($sr->desired_date)
-                                        <p class="text-xs text-gray-400 mt-1">
-                                            Data: {{ $sr->desired_date->format(config('marketplace.date_display')) }}
-                                        </p>
-                                    @endif
                                     <p class="text-xs text-gray-400 mt-1">{{ $sr->responses_count }} raspuns(uri)</p>
                                 </div>
                             </div>

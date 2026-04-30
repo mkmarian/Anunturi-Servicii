@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
+
 class ProfileController extends Controller
 {
     /**
@@ -38,14 +39,47 @@ class ProfileController extends Controller
         $user->save();
 
         // Campuri UserProfile
-        $profileData = $request->only('public_name', 'company_name', 'bio', 'county_id', 'city_id', 'website', 'is_business');
+        $profileData = $request->only('public_name', 'company_name', 'bio', 'county_id', 'city_id', 'website');
 
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
-            if ($user->profile?->avatar_path) {
-                Storage::disk('public')->delete($user->profile->avatar_path);
+            $file = $request->file('avatar');
+            $mime = $file->getMimeType();
+
+            // Citeste imaginea originala
+            $source = match(true) {
+                str_contains($mime, 'jpeg') => imagecreatefromjpeg($file->getRealPath()),
+                str_contains($mime, 'png')  => imagecreatefrompng($file->getRealPath()),
+                str_contains($mime, 'gif')  => imagecreatefromgif($file->getRealPath()),
+                str_contains($mime, 'webp') => imagecreatefromwebp($file->getRealPath()),
+                default => null,
+            };
+
+            if ($source) {
+                $srcW = imagesx($source);
+                $srcH = imagesy($source);
+                $size = min($srcW, $srcH);
+                $srcX = (int)(($srcW - $size) / 2);
+                $srcY = (int)(($srcH - $size) / 2);
+
+                $canvas = imagecreatetruecolor(400, 400);
+                $white = imagecolorallocate($canvas, 255, 255, 255);
+                imagefill($canvas, 0, 0, $white);
+                imagecopyresampled($canvas, $source, 0, 0, $srcX, $srcY, 400, 400, $size, $size);
+                imagedestroy($source);
+
+                ob_start();
+                imagewebp($canvas, null, 85);
+                $webpData = ob_get_clean();
+                imagedestroy($canvas);
+
+                $filename = 'avatars/' . uniqid() . '.webp';
+                Storage::disk('uploads')->put($filename, $webpData);
+
+                if ($user->profile?->avatar_path) {
+                    Storage::disk('uploads')->delete($user->profile->avatar_path);
+                }
+                $profileData['avatar_path'] = $filename;
             }
-            $profileData['avatar_path'] = $path;
         }
 
         $user->profile()->updateOrCreate(['user_id' => $user->id], $profileData);

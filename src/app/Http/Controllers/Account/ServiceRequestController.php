@@ -46,11 +46,7 @@ class ServiceRequestController extends Controller
             'title'        => $data['title'],
             'slug'         => $this->uniqueSlug($data['title']),
             'description'  => $data['description'],
-            'budget_type'  => $data['budget_type'] ?? null,
-            'budget_from'  => $data['budget_from'] ?? null,
-            'budget_to'    => $data['budget_to'] ?? null,
             'currency'     => 'RON',
-            'desired_date' => $data['desired_date'] ?? null, // mutator pe model face conversia
             'status'       => 'pending',
         ]);
 
@@ -87,10 +83,6 @@ class ServiceRequestController extends Controller
             'title'        => $data['title'],
             'slug'         => $slug,
             'description'  => $data['description'],
-            'budget_type'  => $data['budget_type'] ?? null,
-            'budget_from'  => $data['budget_from'] ?? null,
-            'budget_to'    => $data['budget_to'] ?? null,
-            'desired_date' => $data['desired_date'] ?? null,
             'status'       => in_array($cerere->status, ['published']) ? 'pending' : $cerere->status,
         ]);
 

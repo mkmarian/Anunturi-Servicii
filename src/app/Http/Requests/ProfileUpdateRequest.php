@@ -26,15 +26,12 @@ class ProfileUpdateRequest extends FormRequest
             'county_id'    => ['nullable', 'integer', 'exists:counties,id'],
             'city_id'      => ['nullable', 'integer', 'exists:cities,id'],
             'website'      => ['nullable', 'url', 'max:255'],
-            'is_business'  => ['boolean'],
             'avatar'       => ['nullable', 'image', 'max:2048'],
         ];
     }
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'is_business' => $this->boolean('is_business'),
-        ]);
+        $this->merge([]);
     }
 }

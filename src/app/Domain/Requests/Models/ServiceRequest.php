@@ -26,7 +26,6 @@ class ServiceRequest extends Model
         'budget_from',
         'budget_to',
         'currency',
-        'desired_date',
         'status',
         'moderation_note',
         'published_at',
@@ -39,23 +38,9 @@ class ServiceRequest extends Model
         return [
             'budget_from'  => 'decimal:2',
             'budget_to'    => 'decimal:2',
-            'desired_date' => 'date',         // stocat Y-m-d, afisat prin Carbon
             'published_at' => 'datetime',
             'expires_at'   => 'datetime',
         ];
-    }
-
-    // ── Mutator: accepta dd-mm-yyyy din formular si stocheaza Y-m-d ────────
-    public function setDesiredDateAttribute(?string $value): void
-    {
-        if ($value) {
-            $parsed = \DateTime::createFromFormat('d-m-Y', $value);
-            $this->attributes['desired_date'] = $parsed
-                ? $parsed->format('Y-m-d')
-                : $value; // daca e deja Y-m-d (ex: seeder)
-        } else {
-            $this->attributes['desired_date'] = null;
-        }
     }
 
     // ── Scopes ──────────────────────────────────────────────

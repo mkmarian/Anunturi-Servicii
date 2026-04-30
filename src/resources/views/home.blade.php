@@ -148,11 +148,6 @@
                     <p class="text-xs text-green-600 font-medium mb-1">{{ $sr->category->name }}</p>
                     <h3 class="font-semibold text-gray-900 leading-snug line-clamp-2">{{ $sr->title }}</h3>
                     <p class="text-sm text-gray-500 mt-1">📍 {{ $sr->city->name ?? '' }}, {{ $sr->county->name ?? '' }}</p>
-                    @if($sr->budget_to)
-                        <p class="mt-2 text-sm font-medium text-gray-700">
-                            Buget max: <span class="text-green-700">{{ number_format($sr->budget_to, 0, ',', '.') }} RON</span>
-                        </p>
-                    @endif
                     <p class="mt-2 text-xs text-gray-400">{{ $sr->responses_count }} oferte primite</p>
                 </a>
             @endforeach
@@ -169,15 +164,6 @@
         <p class="mt-3 text-indigo-100 text-lg">
             Înregistrează-te gratuit și postează primul tău anunț în mai puțin de 5 minute.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{{ route('register') }}"
-               class="px-8 py-3 bg-white text-indigo-700 font-semibold rounded-xl hover:bg-indigo-50 shadow transition">
-                Înregistrare gratuită
-            </a>
-            <a href="{{ route('listings.index') }}"
-               class="px-8 py-3 border-2 border-white text-white font-semibold rounded-xl hover:bg-indigo-700 transition">
-                Răsfoiește anunțuri
-            </a>
         </div>
     </div>
 </section>

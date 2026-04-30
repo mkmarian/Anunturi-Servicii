@@ -1,10 +1,4 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">Schimbare parolă</h2>
-        <p class="mt-1 text-sm text-gray-600">Folosește o parolă lungă și unică pentru securitate mai bună.</p>
-    </header>
-
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-5">
+<form method="post" action="{{ route('password.update') }}" class="space-y-5">
         @csrf
         @method('put')
 
@@ -35,5 +29,4 @@
             @endif
         </div>
     </form>
-</section>
 

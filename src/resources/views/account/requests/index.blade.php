@@ -35,11 +35,6 @@
                                     {{ $request->city->name ?? '' }}, {{ $request->county->name ?? '' }}
                                     &bull; {{ $request->category->name ?? '' }}
                                 </p>
-                                @if($request->desired_date)
-                                    <p class="text-sm text-gray-500">
-                                        Data dorita: {{ $request->desired_date->format(config('marketplace.date_display')) }}
-                                    </p>
-                                @endif
                                 <p class="text-xs text-gray-400 mt-1">
                                     {{ $request->responses_count }} raspuns(uri) &bull;
                                     Postat: {{ $request->created_at->format(config('marketplace.date_display')) }}

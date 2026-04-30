@@ -23,29 +23,8 @@
                     <div class="mt-3 flex flex-wrap gap-3 text-sm text-gray-600">
                         <span>📍 {{ $serviceRequest->city->name }}, {{ $serviceRequest->county->name }}</span>
                         <span>📂 {{ $serviceRequest->category->name }}</span>
-                        @if($serviceRequest->desired_date)
-                            <span>📅 Data dorita: {{ $serviceRequest->desired_date->format(config('marketplace.date_display')) }}</span>
-                        @endif
                         <span>🗓 Postat: {{ $serviceRequest->published_at?->format(config('marketplace.date_display')) }}</span>
                     </div>
-
-                    {{-- Budget --}}
-                    @if($serviceRequest->budget_from || $serviceRequest->budget_to || $serviceRequest->budget_type)
-                        <div class="mt-4 p-3 bg-indigo-50 rounded-md inline-block">
-                            <span class="text-sm text-gray-600">Buget estimat: </span>
-                            <span class="font-semibold text-indigo-700">
-                                @if($serviceRequest->budget_from && $serviceRequest->budget_to)
-                                    {{ number_format($serviceRequest->budget_from, 0, ',', '.') }} - {{ number_format($serviceRequest->budget_to, 0, ',', '.') }} RON
-                                @elseif($serviceRequest->budget_from)
-                                    De la {{ number_format($serviceRequest->budget_from, 0, ',', '.') }} RON
-                                @elseif($serviceRequest->budget_to)
-                                    Maxim {{ number_format($serviceRequest->budget_to, 0, ',', '.') }} RON
-                                @else
-                                    {{ ucfirst($serviceRequest->budget_type) }}
-                                @endif
-                            </span>
-                        </div>
-                    @endif
 
                     <div class="mt-5 prose prose-sm max-w-none text-gray-700">
                         {!! nl2br(e($serviceRequest->description)) !!}
@@ -61,7 +40,7 @@
                     @php $profile = $serviceRequest->user->profile; @endphp
 
                     @if($profile?->avatar_path)
-                        <img src="{{ Storage::url($profile->avatar_path) }}" class="w-14 h-14 rounded-full object-cover mb-3">
+                        <img src="{{ asset('uploads/' . $profile->avatar_path) }}" class="w-14 h-14 rounded-full object-cover mb-3">
                     @else
                         <div class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center text-2xl mb-3">👤</div>
                     @endif

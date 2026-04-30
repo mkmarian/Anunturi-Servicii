@@ -39,7 +39,10 @@ Route::get('/api/check-email', function (\Illuminate\Http\Request $request) {
 })->middleware('guest')->name('api.check-email');
 // ── API: verificare telefon disponibil (AJAX register) ────────────
 Route::get('/api/check-phone', function (\Illuminate\Http\Request $request) {
-    $exists = \App\Models\User::where('phone', $request->query('phone'))->exists();
+    $phone = $request->query('phone');
+    // Normalizeaza: +40xxxxxxxxx sau 0040xxxxxxxxx → 0xxxxxxxxx
+    $normalized = preg_replace('/^(\+40|0040)/', '0', preg_replace('/[\s\-\.\(\)]/', '', $phone));
+    $exists = \App\Models\User::where('phone', $normalized)->exists();
     return response()->json(['taken' => $exists]);
 })->middleware('guest')->name('api.check-phone');
 // ── Dashboard (redirect pe rol) ───────────────────────────────

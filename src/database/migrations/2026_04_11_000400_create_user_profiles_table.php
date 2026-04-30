@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('cover_path', 255)->nullable();
             $table->string('website', 255)->nullable();
             $table->string('whatsapp_phone', 30)->nullable();
-            $table->boolean('is_business')->default(false);
             $table->timestamps();
 
             $table->index(['county_id', 'city_id']);

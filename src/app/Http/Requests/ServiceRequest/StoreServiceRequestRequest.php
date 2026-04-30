@@ -19,10 +19,6 @@ class StoreServiceRequestRequest extends FormRequest
             'county_id'    => ['required', 'integer', 'exists:counties,id'],
             'city_id'      => ['required', 'integer', 'exists:cities,id'],
             'description'  => ['required', 'string', 'max:5000'],
-            'budget_type'  => ['nullable', 'in:fixed,max_budget,negotiable,unknown'],
-            'budget_from'  => ['nullable', 'numeric', 'min:0', 'max:999999'],
-            'budget_to'    => ['nullable', 'numeric', 'min:0', 'max:999999', 'gte:budget_from'],
-            'desired_date' => ['nullable', 'romanian_date'],
         ];
     }
 
@@ -36,8 +32,6 @@ class StoreServiceRequestRequest extends FormRequest
             'county_id.required'   => 'Selecteaza judetul.',
             'city_id.required'     => 'Selecteaza localitatea.',
             'description.required' => 'Descrierea este obligatorie.',
-            'budget_to.gte'        => 'Bugetul maxim trebuie sa fie mai mare decat bugetul minim.',
-            'desired_date'         => 'Formatul datei trebuie sa fie zz-ll-aaaa.',
         ];
     }
 }
