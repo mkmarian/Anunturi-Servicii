@@ -22,13 +22,8 @@
         <option value="">— Alege categoria —</option>
         @foreach($categories as $cat)
             <option value="{{ $cat->id }}" {{ old('category_id', $cerere->category_id ?? '') == $cat->id ? 'selected' : '' }}>
-                {{ $cat->name }}
+                {{ $cat->icon }} {{ $cat->name }}
             </option>
-            @foreach($cat->children as $child)
-                <option value="{{ $child->id }}" {{ old('category_id', $cerere->category_id ?? '') == $child->id ? 'selected' : '' }}>
-                    &nbsp;&nbsp;{{ $child->name }}
-                </option>
-            @endforeach
         @endforeach
     </select>
     <x-input-error :messages="$errors->get('category_id')" class="mt-1" />

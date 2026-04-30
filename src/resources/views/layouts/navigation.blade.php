@@ -32,9 +32,9 @@
                             <button class="inline-flex items-center gap-1.5 px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-600 bg-white hover:text-gray-900 focus:outline-none transition">
                                 @if(Auth::user()->profile?->avatar_path)
                                     <img src="{{ asset('uploads/' . Auth::user()->profile->avatar_path) }}"
-                                         class="w-9 h-9 rounded-full object-cover">
+                                         class="w-7 h-7 rounded-full object-cover">
                                 @else
-                                    <span class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs">
+                                    <span class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs">
                                         {{ Str::upper(Str::substr(Auth::user()->name, 0, 1)) }}
                                     </span>
                                 @endif
@@ -146,9 +146,9 @@
             @auth
                 <div class="flex items-center gap-3 min-w-0 flex-1 mr-2">
                     @if(Auth::user()->profile?->avatar_path)
-                        <img src="{{ asset('uploads/' . Auth::user()->profile->avatar_path) }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                        <img src="{{ asset('uploads/' . Auth::user()->profile->avatar_path) }}" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
                     @else
-                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold flex-shrink-0">
+                        <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold flex-shrink-0">
                             {{ Str::upper(Str::substr(Auth::user()->name, 0, 1)) }}
                         </div>
                     @endif

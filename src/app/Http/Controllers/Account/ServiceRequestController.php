@@ -28,7 +28,7 @@ class ServiceRequestController extends Controller
 
     public function create(): View
     {
-        $categories = ServiceCategory::active()->roots()->with('children')->ordered()->get();
+        $categories = ServiceCategory::active()->roots()->ordered()->get();
         $counties   = County::orderBy('name')->get();
 
         return view('account.requests.create', compact('categories', 'counties'));
@@ -58,7 +58,7 @@ class ServiceRequestController extends Controller
     {
         $this->authorizeRequest($cerere);
 
-        $categories = ServiceCategory::active()->roots()->with('children')->ordered()->get();
+        $categories = ServiceCategory::active()->roots()->ordered()->get();
         $counties   = County::orderBy('name')->get();
         $cerere->load('city');
 
