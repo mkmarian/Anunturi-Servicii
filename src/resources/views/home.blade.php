@@ -49,10 +49,16 @@
 {{-- ── CATEGORII ────────────────────────────────────────────────────── --}}
 <section class="py-14 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">Categorii populare</h2>
-        <p class="text-gray-500 mb-8">Alege domeniul de care ai nevoie</p>
+        <h2 class="text-2xl font-bold text-gray-900 mb-8">Categorii</h2>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <a href="{{ route('listings.index') }}"
+               class="group flex flex-col items-center p-5 bg-gray-50 rounded-xl hover:bg-indigo-50 hover:shadow-md transition text-center border border-transparent hover:border-indigo-200">
+                <span class="text-3xl mb-2">🗂️</span>
+                <span class="text-sm font-medium text-gray-800 group-hover:text-indigo-700 leading-snug">
+                    Toate categoriile
+                </span>
+            </a>
             @foreach($categories as $cat)
                 <a href="{{ route('listings.index', ['category' => $cat->id]) }}"
                    class="group flex flex-col items-center p-5 bg-gray-50 rounded-xl hover:bg-indigo-50 hover:shadow-md transition text-center border border-transparent hover:border-indigo-200">
