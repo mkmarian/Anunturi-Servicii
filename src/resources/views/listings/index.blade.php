@@ -66,8 +66,8 @@
                 <p class="text-sm text-gray-500 mb-4">{{ $listings->total() }} anunțuri găsite</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     @foreach($listings as $listing)
-                        <div class="relative bg-white shadow-sm rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group border border-gray-100 hover:border-indigo-200">
-                            <a href="{{ route('listings.show', $listing->slug) }}" class="block">
+                        <div class="relative bg-white shadow-sm rounded-2xl hover:shadow-md transition-all duration-200 group border border-gray-100 hover:border-indigo-200">
+                            <a href="{{ route('listings.show', $listing->slug) }}" class="block overflow-hidden rounded-2xl">
                                 <div class="h-44 overflow-hidden bg-gray-50">
                                     @if($listing->primaryImage)
                                         <img src="{{ Storage::url($listing->primaryImage->path) }}"
