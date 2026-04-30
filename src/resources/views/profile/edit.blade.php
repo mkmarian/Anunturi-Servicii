@@ -86,19 +86,30 @@
                     </div>
 
                     {{-- Schimbare parolă --}}
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" x-data="{ open: false }">
+                        <button type="button" @click="open = !open"
+                                class="w-full px-6 py-4 border-b border-gray-100 flex items-center gap-3 hover:bg-gray-50 transition text-left">
+                            <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
                                 <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
                             </div>
-                            <div>
+                            <div class="flex-1">
                                 <h2 class="font-semibold text-gray-900 text-sm">Schimbare parolă</h2>
                                 <p class="text-xs text-gray-500">Folosește o parolă lungă și unică</p>
                             </div>
-                        </div>
-                        <div class="p-6">
+                            <svg class="w-4 h-4 text-gray-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 -translate-y-2"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 -translate-y-2"
+                             class="p-6">
                             @include('profile.partials.update-password-form')
                         </div>
                     </div>
