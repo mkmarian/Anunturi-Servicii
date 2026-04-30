@@ -170,26 +170,8 @@
 @endguest
 
 {{-- ── FOOTER ───────────────────────────────────────────────────────── --}}
-<footer class="bg-gray-900 text-gray-400 py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between gap-6">
-        <div>
-            <p class="text-white font-bold text-lg">
-                <span class="text-indigo-400">Meserii</span>Ro
-            </p>
-            <p class="text-sm mt-1">Platforma de servicii pentru România</p>
-        </div>
-        <div class="flex gap-8 text-sm">
-            <div>
-                <p class="text-white font-medium mb-2">Navigare</p>
-                <ul class="space-y-1">
-                    <li><a href="{{ route('listings.index') }}" class="hover:text-white">Anunțuri</a></li>
-                    <li><a href="{{ route('service-requests.index') }}" class="hover:text-white">Cereri</a></li>
-                    <li><a href="{{ route('register') }}" class="hover:text-white">Înregistrare</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-gray-800 text-xs text-center">
+<footer class="bg-gray-900 text-gray-400 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-xs text-center">
         © {{ date('Y') }} MeseriiRo. Toate drepturile rezervate.
     </div>
 </footer>
