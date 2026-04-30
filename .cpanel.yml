@@ -1,4 +1,16 @@
 ---
 deployment:
   tasks:
-    - /bin/echo "Deploy OK"
+    - export DEPLOYPATH=/home/ogtgzxxk/meseriasi/src
+    - mkdir -p $DEPLOYPATH/storage/framework/sessions
+    - mkdir -p $DEPLOYPATH/storage/framework/views
+    - mkdir -p $DEPLOYPATH/storage/framework/cache/data
+    - mkdir -p $DEPLOYPATH/storage/app/public
+    - mkdir -p $DEPLOYPATH/storage/logs
+    - chmod -R 775 $DEPLOYPATH/storage
+    - chmod -R 775 $DEPLOYPATH/bootstrap/cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
+    - /usr/local/bin/php $DEPLOYPATH/artisan view:clear
+    - /usr/local/bin/php $DEPLOYPATH/artisan config:clear
+    - /usr/local/bin/php $DEPLOYPATH/artisan cache:clear
+    - /usr/local/bin/php $DEPLOYPATH/artisan route:clear
