@@ -80,7 +80,11 @@ class Listing extends Model
 
     public function scopeInCategory($q, int $categoryId)
     {
-        return $q->where('category_id', $categoryId);
+        $ids = \App\Domain\Shared\Models\ServiceCategory::where('id', $categoryId)
+            ->orWhere('parent_id', $categoryId)
+            ->pluck('id');
+
+        return $q->whereIn('category_id', $ids);
     }
 
     // ── Relatii ─────────────────────────────────────────────
