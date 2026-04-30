@@ -103,7 +103,7 @@ class ServiceRequestController extends Controller
 
     private function authorizeRequest(ServiceRequest $cerere): void
     {
-        if ($cerere->user_id !== auth()->id()) {
+        if ((int) $cerere->user_id !== (int) auth()->id()) {
             abort(403);
         }
     }
