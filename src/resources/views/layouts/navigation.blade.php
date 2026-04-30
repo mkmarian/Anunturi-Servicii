@@ -143,8 +143,24 @@
 
         {{-- Header drawer --}}
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-            <a href="{{ route('home') }}" class="text-xl font-bold text-indigo-600">Meserii<span class="text-gray-800">Ro</span></a>
-            <button @click="open = false" class="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition">
+            @auth
+                <div class="flex items-center gap-3 min-w-0 flex-1 mr-2">
+                    @if(Auth::user()->profile?->avatar_path)
+                        <img src="{{ asset('uploads/' . Auth::user()->profile->avatar_path) }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                    @else
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold flex-shrink-0">
+                            {{ Str::upper(Str::substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @endif
+                    <div class="min-w-0">
+                        <div class="font-semibold text-gray-800 truncate text-sm">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-gray-400 truncate">{{ Auth::user()->email }}</div>
+                    </div>
+                </div>
+            @else
+                <a href="{{ route('home') }}" class="text-xl font-bold text-indigo-600">Meserii<span class="text-gray-800">Ro</span></a>
+            @endauth
+            <button @click="open = false" class="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition flex-shrink-0">
                 <svg class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -155,36 +171,11 @@
         <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
 
             @auth
-            <div class="border-t border-gray-100 my-3"></div>
-            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Contul meu</p>
-
-            {{-- Info user --}}
-            <div class="flex items-center gap-3 px-3 py-2 mb-1">
-                @if(Auth::user()->profile?->avatar_path)
-                    <img src="{{ asset('uploads/' . Auth::user()->profile->avatar_path) }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
-                @else
-                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold flex-shrink-0">
-                        {{ Str::upper(Str::substr(Auth::user()->name, 0, 1)) }}
-                    </div>
-                @endif
-                <div class="min-w-0">
-                    <div class="font-medium text-gray-800 truncate">{{ Auth::user()->name }}</div>
-                    <div class="text-xs text-gray-400 truncate">{{ Auth::user()->email }}</div>
-                </div>
-            </div>
 
             @if(auth()->user()->isCraftsman())
-                <a href="{{ route('craftsman.listings.create') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition text-sm font-medium mb-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Anunț nou
-                </a>
                 <a href="{{ route('craftsman.listings.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📋 Anunțurile mele</a>
                 <a href="{{ route('craftsman.statistics') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📊 Statisticile mele</a>
             @elseif(auth()->user()->isCustomer())
-                <a href="{{ route('customer.requests.create') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition text-sm font-medium mb-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Cerere nouă
-                </a>
                 <a href="{{ route('customer.requests.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition text-sm font-medium">📋 Cererile mele</a>
             @endif
 
@@ -208,9 +199,20 @@
             @endauth
         </div>
 
-        {{-- Footer drawer: deconectare --}}
+        {{-- Footer drawer: actiune + deconectare --}}
         @auth
-        <div class="border-t border-gray-100 p-3">
+        <div class="border-t border-gray-100 p-3 space-y-2">
+            @if(auth()->user()->isCraftsman())
+                <a href="{{ route('craftsman.listings.create') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition text-sm font-medium w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Anunț nou
+                </a>
+            @elseif(auth()->user()->isCustomer())
+                <a href="{{ route('customer.requests.create') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition text-sm font-medium w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Cerere nouă
+                </a>
+            @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition text-sm font-medium">
